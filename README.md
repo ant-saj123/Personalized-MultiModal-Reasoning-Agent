@@ -1,18 +1,60 @@
-# 🤖 RAG Agent with Beautiful UI
+# 🧠 PM Copilot – AI-Powered Product Management Assistant
 
-A complete Retrieval-Augmented Generation (RAG) system with a modern, beautiful frontend interface. This system allows you to chat with your documents using AI, with real-time document retrieval from Pinecone vector store.
+PM Copilot is an intelligent agent designed to assist product managers by generating product strategy artifacts like PRDs, roadmap entries, metrics, and meeting notes — all based on your input. It references high-quality example documents to extract structure, patterns, and best practices.
 
-## 🚀 Features
+Give it a feature idea like:
 
-- **Modern UI**: Beautiful, responsive chat interface built with Next.js and Tailwind CSS
-- **RAG System**: Advanced document retrieval and AI-powered responses
-- **Vector Storage**: Pinecone integration for efficient document search
-- **Real-time Chat**: Interactive conversation with your documents
-- **Source Attribution**: See which documents were used for each response
-- **Document Types**: Support for PRDs, sprints, roadmaps, and more
-- **Conversation Memory**: Maintains chat history across sessions
+> "Add Slack integration to our task app"
 
-## 📁 Project Structure
+And it can generate:
+
+- 📄 A full PRD draft  
+- 🛣️ Roadmap entry with timeline and dependencies  
+- 📊 Success metrics (e.g., NPS, adoption, latency)  
+- 📢 Internal or customer-facing release notes  
+- 📅 Planning meeting agendas and follow-ups
+
+---
+
+## 🔧 Features
+
+✅ **Context-Aware Agent** — Uses Retrieval-Augmented Generation (RAG) to pull examples from embedded docs for inspiration  
+✅ **Intelligent Composition** — Synthesizes patterns from product examples to draft new content tailored to your prompt  
+✅ **Chat Interface** — API-powered LLM chat experience with memory and traceable reasoning  
+✅ **Multi-Modal Frontend** — TypeScript React frontend **already included** for easy user interaction
+
+---
+
+## 🛠️ Tech Stack
+
+- **FastAPI** – High-performance Python backend  
+- **LangChain + LangGraph** – Modular LLM agent orchestration and tracing  
+- **OpenAI GPT-3.5** – Language model for response generation  
+- **Pinecone** – Vector database for semantic document retrieval  
+- **TypeScript** – Frontend using React (already included)
+
+---
+
+## 📈 Impact
+
+- ⚡ Generates product drafts in seconds vs. hours of manual writing  
+- 🔍 Reduces ambiguity by grounding responses in real example docs  
+- 🧠 Enables new PMs to follow best practices with zero ramp-up  
+- 🛠️ Built on 30 curated sample documents across PRDs, sprints, and roadmaps
+
+---
+
+## 🚀 Getting Started
+
+1. Clone the repo  
+2. Set up your `.env` with your OpenAI + Pinecone API keys  
+3. Run `setup.py` to embed your example documents  
+4. Start the API with `uvicorn api:app --reload`  
+5. Start the TypeScript React frontend (see below) or chat via cURL/Postman
+
+---
+
+## 📂 Folder Structure
 
 ```
 ├── backend/
@@ -23,20 +65,15 @@ A complete Retrieval-Augmented Generation (RAG) system with a modern, beautiful 
 ├── frontend/
 │   ├── src/
 │   │   ├── app/            # Next.js app directory
-│   │   ├── components/     # React components
+│   │   ├── components/     # React components (with shadcn/ui)
 │   │   └── lib/            # Utilities and API service
 │   └── package.json
 └── README.md
 ```
 
-## 🛠️ Setup Instructions
+---
 
-### Prerequisites
-
-- Python 3.9+
-- Node.js 18+
-- Pinecone account and API key
-- OpenAI API key
+## 🏃‍♂️ How to Run
 
 ### 1. Environment Setup
 
@@ -54,75 +91,27 @@ OPENAI_API_KEY=your_openai_api_key
 ### 2. Backend Setup
 
 ```bash
-# Navigate to project root
-cd Personalized-MultiModal-Reasoning-Agent
-
-# Activate virtual environment (if using one)
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-
-# Install Python dependencies
-pip install fastapi uvicorn langchain-openai langchain-pinecone pinecone python-dotenv
-
-# Run document ingestion (only needed once)
 cd backend
-python setup.py
-
-# Start the backend server
-python api.py
+python3 -m venv .venv
+source .venv/bin/activate
+pip3 install fastapi uvicorn langchain-openai langchain-pinecone pinecone-client python-dotenv
+python setup.py   # (run once to embed documents)
+uvicorn api:app --reload
 ```
 
 The backend will be available at `http://localhost:8000`
 
-### 3. Frontend Setup
+### 3. Frontend Setup (TypeScript React)
 
 ```bash
-# In a new terminal, navigate to frontend
 cd frontend
-
-# Install dependencies
 npm install
-
-# Start the development server
 npm run dev
 ```
 
 The frontend will be available at `http://localhost:3000`
 
-## 🎯 Usage
-
-### 1. Document Ingestion
-
-First, place your documents in the `backend/copilot-data/` directory:
-
-```
-backend/copilot-data/
-├── prds/          # Product Requirements Documents
-├── sprints/       # Sprint planning documents
-└── roadmaps/      # Product roadmaps
-```
-
-Supported file formats:
-- `.md` (Markdown)
-- `.txt` (Text files)
-- `.csv` (CSV files)
-
-### 2. Chat Interface
-
-1. Open `http://localhost:3000` in your browser
-2. You'll see a beautiful chat interface
-3. Ask questions about your documents
-4. View source documents used for each response
-5. Use the connection status indicator to ensure backend is running
-
-### 3. Example Questions
-
-Since your documents include PRDs, sprints, and roadmaps, you can ask:
-
-- "What are the main features planned for Q1?"
-- "What was the goal of Sprint 47?"
-- "What are the key metrics for success?"
-- "What technical challenges were identified?"
-- "What's the timeline for the mobile app launch?"
+---
 
 ## 🔧 API Endpoints
 
@@ -135,14 +124,28 @@ The backend provides these REST API endpoints:
 - `GET /history` - Get conversation history
 - `DELETE /history` - Clear conversation history
 
-## 🎨 UI Features
+---
 
-- **Real-time Chat**: Instant messaging interface
-- **Source Display**: Shows which documents were used
-- **Connection Status**: Visual indicator of backend connectivity
-- **Loading States**: Smooth animations during processing
+## 🎨 UI & Design System
+
+- **Dark Mode**: Optimized for professional use
+- **Glassmorphism**: Modern, semi-transparent UI effects
 - **Responsive Design**: Works on desktop and mobile
-- **Modern Design**: Clean, professional interface
+- **shadcn/ui**: Component library for consistent, accessible UI
+- **Tailwind CSS**: Utility-first styling
+- **Purple accent colors** and semantic color tokens
+- **Loading States**: Smooth animations during processing
+
+---
+
+## 📦 Frontend Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+---
 
 ## 🚀 Deployment
 
@@ -161,35 +164,16 @@ The Next.js frontend can be deployed to:
 - Netlify
 - AWS Amplify
 
-## 🔍 Troubleshooting
+---
 
-### Common Issues
+## 🔍 Troubleshooting
 
 1. **Connection Error**: Make sure the backend is running on port 8000
 2. **Pinecone Error**: Verify your Pinecone API key and environment
 3. **OpenAI Error**: Check your OpenAI API key and billing
 4. **Import Errors**: Ensure all dependencies are installed
 
-### Debug Mode
-
-To run in debug mode:
-
-```bash
-# Backend with debug logging
-cd backend
-uvicorn api:app --reload --log-level debug
-
-# Frontend with debug info
-cd frontend
-npm run dev
-```
-
-## 📊 Performance
-
-- **Document Retrieval**: ~200ms average response time
-- **AI Generation**: ~2-5 seconds depending on response length
-- **Vector Search**: Pinecone provides sub-100ms search times
-- **UI Responsiveness**: 60fps animations and smooth interactions
+---
 
 ## 🤝 Contributing
 
@@ -199,19 +183,12 @@ npm run dev
 4. Add tests if applicable
 5. Submit a pull request
 
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License.
 
-## 🆘 Support
-
-If you encounter any issues:
-
-1. Check the troubleshooting section
-2. Verify all environment variables are set
-3. Ensure all dependencies are installed
-4. Check the console for error messages
-
 ---
 
-**Happy chatting with your documents! 🎉** 
+**Happy product managing with PM Copilot! 🚀** 
